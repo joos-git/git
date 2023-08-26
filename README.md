@@ -29,7 +29,8 @@ git config --global user.email myEmail@example.com
 ```
 Инициализация репозитория:
 ```
-git init
+git init - делаем в дитектории которую используем под проект
+проявляется папка .git где лежит все необходимое для git-а
 ```
 Просмотр текущего статуса:
 ```
@@ -44,6 +45,19 @@ git add имя_файла
 После этого изменения файла начнут отслеживаться и его можно закоммитить:
 ```
 git commit -m "some useful comment here"
+git log - покажет инфо о коммите (зеленый main - локально, красный - и удаленно)
+git log --one-line - короткое инфо
+git log --one-line --graph - визуально показывет дерево коммитов
+git show - изменения в последнем коммите
+```
+```
+git config --global alias.st status - алиас для частых комманд
+git st = git status
+```
+```
+git branch -v - покажет существующие ветки
+git branch develop - создание новой ветки develop
+git checkout -b develop - создаем ветку и сразу в нее переходим
 ```
 Перед каждым коммитом необходимо проиндексировать файлы, которые будут закоммичены. Это можно сделать с помощью:
 ```
@@ -65,9 +79,13 @@ git checkout имя файла
 ```
 git reset HEAD имя файла
 ```
+```
+git reset --hard commit-id - полный откат к коммиту по id, удаление файлов и логов
+git reset --soft commit-id - удаляется логи и возвращаются изменения файлов до коммита
+```
 Откат изменений коммита осуществляется с помощью revert:
 ```
-git revert HEAD --no-edit
+git revert HEAD --no-edit - в логах остается информация об откате
 ```
 Вместо HEAD можно указать любой id коммита из истории. Просмотр истории:
 ```
@@ -78,14 +96,17 @@ git log
 Создание веток:
 ```
 git checkout -b имя_ветки
-git checkout master
+git checkout master - переключение в master
+```
+```
+git checkout b031dd4 - смотрим состояние первого коммита, не можем редактировать, поэтому
+git switch -c switched_develop - создаем новую ветку с первого коммита и переключаемся на нее
 ```
 Слияние веток:
 ```
-git merge develop
+git merge develop - переносим в ветку в которой находимся из develop
 ```
 **Клонирование репозитория**
-
 Клонировать репозиторий с сервера можно с помощью команды:
 ```
 git clone https://github.com/netology-code/sysadm-homeworks.git
@@ -94,16 +115,24 @@ git clone https://github.com/netology-code/sysadm-homeworks.git
 
 Просмотр удаленных репозиториев:
 ```
-git remote
+git remote -v - смотрим есть ли хоть что то по удаленным репозиториям
 ```
 В ответ мы увидим имена всех существующих удаленных репозиториев (по умолчанию обычно origin):
 ```
 git remote show origin
 ```
 **Добавление удаленного репозитория**
+Подготовка
+- Создаем репозиторий с таким именем
+- Не ставим галочку README (иначе будет конфликт логов)
+- Добавляем публичный ключ в git:
+- Token - Settings - SSH and GPG keys - https://github.com/settings/keys
 Добавление удаленного репозитория:
 ```
 git remote add origin https://github.com/netology-code/sysadm-homeworks.git
+git remote add origin git@github.com:jo-os/git.git (практика)
+
+git push --set-upstream origin main - пушим и создаем нужную ветку main
 ```
 Отправка изменения в удаленный репозиторий:
 ```
